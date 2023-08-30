@@ -25,13 +25,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests(authorizeRequests ->
                         authorizeRequests
+                                .antMatchers("/swagger-ui/**", "/swagger-ui-custom.html", "/api-docs/**").permitAll()
                                 .antMatchers("/api/register").permitAll()
                                 .antMatchers("/api/videos/upload").authenticated()
                                 .antMatchers("/admin/**").hasRole("ADMIN")
                                 .anyRequest().authenticated()
                 )
                 .httpBasic().and()
-                .csrf().disable(); // Отключаем CSRF для упрощения тестирования
+                .csrf().disable();
     }
 
     @Autowired
